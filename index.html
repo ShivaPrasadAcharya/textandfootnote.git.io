@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dynamic Webpage Example</title>
+  </head>
+
+  <body>
+    <form>
+      <label for="descriptionBox">Description </label>
+      <textarea id="descriptionBox" placeholder="Enter your description here"></textarea><br><br>
+      <label for="h3-input">Enter text for H3:</label>
+      <input type="text" id="h3-input">
+      <br>
+      <label for="h4-input">Enter text for H4:</label>
+      <input type="text" id="h4-input">
+      <br>
+      <label for="p1-input">Enter text for Paragraph 1:</label>
+      <input type="text" id="p1-input">
+      <br>
+      <label for="p2-input">Enter text for Paragraph 2:</label>
+      <input type="text" id="p2-input">
+      <br>
+      <div>
+        <label for="footnote-text">Footnote Text:</label>
+        <input type="text" id="footnote-text">
+      </div>
+      <div>
+        <label for="footnote-link">Footnote Link:</label>
+        <input type="text" id="footnote-link">
+      </div>
+      <div>
+        <label for="footnote-see">Footnote See:</label>
+        <input type="text" id="footnote-see">
+      </div>
+      <button type="button" id="submit-button">Submit</button>
+      <button type="button" id="copy-button">Copy to Clipboard</button>
+
+    </form> 
+    
+    <br><br>
+      <div id="code">
+        <code>&lt;h3&gt;thirdheading&lt;/h3&gt;<br> &lt;h4&gt;fourthheading&lt;/h4&gt;<br>&lt;p&gt;paragraphone&lt;a href="#fn1" aria-describedby="footnote-label" id="fn2">&lt;/a&gt;<br>&lt;p&gt;paragraphtwo&lt;/p&gt;<br> &lt;li id="fn1"&gt;FOOTNOTETEXT&lt;a href="LINK" target="_blank"&gt;SEE:-&lt;/a&gt; &lt;a href="#fn2" aria-label="Back to content"&gt;[&amp;#x21A9;]&lt;/a&gt;&lt;/li&gt;</code>
+      </div>
+   
+    <script>
+      const h3Input = document.getElementById("h3-input");
+const h3Element = document.getElementById("h3-element");
+
+const h4Input = document.getElementById("h4-input");
+const h4Element = document.getElementById("h4-element");
+
+const p1Input = document.getElementById("p1-input");
+const p1Element = document.getElementById("p1-element");
+
+const p2Input = document.getElementById("p2-input");
+const p2Element = document.getElementById("p2-element");
+
+const footnoteText = document.getElementById("footnote-text");
+const footnoteLink = document.getElementById("footnote-link");
+const footnoteSee = document.getElementById("footnote-see");
+
+const generateButton = document.getElementById("submit-button");
+generateButton.addEventListener("click", () => {
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = (now.getMonth() + 1).toString().padStart(2, "0");
+  const day = now.getDate().toString().padStart(2, "0");
+  const hour = now.getHours().toString().padStart(2, "0");
+  const minute = now.getMinutes().toString().padStart(2, "0");
+  const fn1Number = year + month + day + hour + minute;
+  const fn2Number = parseInt(fn1Number) + 1;
+
+  const copyButton = document.getElementById("copy-button");
+
+copyButton.addEventListener("click", () => {
+  const codeElement = document.getElementById("code");
+  const codeText = codeElement.textContent.trim();
+  
+  navigator.clipboard.writeText(codeText)
+    .then(() => {
+      alert("Code copied to clipboard!");
+    })
+    .catch(() => {
+      alert("Failed to copy code to clipboard.");
+    });
+});
+
+  const codeElement = document.getElementById("code");
+  codeElement.innerHTML = `<code>&lt;h3&gt;${h3Input.value}&lt;/h3&gt;<br> &lt;h4&gt;${h4Input.value}&lt;/h4&gt;<br>&lt;p&gt;${p1Input.value}&lt;a href="#fn${fn1Number}" aria-describedby="footnote-label" id="fn${fn2Number}">&lt;/a&gt;&lt;/p&gt;<br>&lt;p&gt;${p2Input.value}&lt;/p&gt;<br><br>
+  &lt;li id="fn${fn1Number}"&gt;${footnoteText.value}&lt;a href="${footnoteLink.value}" target="_blank"&gt;${footnoteSee.value}&lt;/a&gt; &lt;a href="#fn${fn2Number}" aria-label="Back to content"&gt;[&amp;#x21A9;]&lt;/a&gt;&lt;/li&gt;</code>`;
+});
+
+    </script>
+   
+    </body>
+    </html>
+    <!--this is for creating pragya content (text and endnotes using  input fields)-->
